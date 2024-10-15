@@ -38,7 +38,7 @@ __declspec(dllexport) void TITCALL ForceClose()
 __declspec(dllexport) void TITCALL StepInto(LPVOID StepCallBack)
 {
     EnterCriticalSection(&engineStepActiveCr);
-    if (!engineStepActive)
+    if (engineStepTID == 0)
     {
         ULONG_PTR ueCurrentPosition = GetContextData(UE_CIP);
         unsigned char instr[16];
@@ -60,7 +60,7 @@ __declspec(dllexport) void TITCALL StepInto(LPVOID StepCallBack)
             myDBGContext.EFlags |= UE_TRAP_FLAG;
             SetThreadContext(hActiveThread, &myDBGContext);
             EngineCloseHandle(hActiveThread);
-            engineStepActive = true;
+            engineStepTID = DBGEvent.dwThreadId;
             engineStepCallBack = StepCallBack;
             engineStepCount = 0;
         }

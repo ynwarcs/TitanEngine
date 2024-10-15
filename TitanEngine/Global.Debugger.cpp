@@ -31,7 +31,7 @@ std::vector<ULONG_PTR> tlsCallBackList;
 std::vector<PROCESS_ITEM_DATA> hListProcess;
 DWORD engineStepCount = 0;
 LPVOID engineStepCallBack = NULL;
-bool engineStepActive = false;
+DWORD engineStepTID = 0;
 bool engineProcessIsNowDetached = false;
 DWORD DBGCode = DBG_CONTINUE;
 bool engineFileIsBeingDebugged = false;

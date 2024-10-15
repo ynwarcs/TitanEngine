@@ -31,7 +31,7 @@ extern std::vector<ULONG_PTR> tlsCallBackList;
 extern std::vector<PROCESS_ITEM_DATA> hListProcess;
 extern DWORD engineStepCount;
 extern LPVOID engineStepCallBack;
-extern bool engineStepActive;
+extern DWORD engineStepTID;
 extern bool engineProcessIsNowDetached;
 extern DWORD DBGCode;
 extern bool engineFileIsBeingDebugged;

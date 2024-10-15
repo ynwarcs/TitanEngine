@@ -16,14 +16,14 @@
 static void engineStep()
 {
     EnterCriticalSection(&engineStepActiveCr);
-    if (engineStepActive)
+    if (engineStepTID == DBGEvent.dwThreadId)
     {
         DBGCode = DBG_CONTINUE;
         if (engineStepCount == 0)
         {
             typedef void(TITCALL* fCustomBreakPoint)(void);
             auto cbStep = fCustomBreakPoint(engineStepCallBack);
-            engineStepActive = false;
+            engineStepTID = 0;
             engineStepCallBack = NULL;
             LeaveCriticalSection(&engineStepActiveCr);
             cbStep();
@@ -1237,7 +1237,7 @@ __declspec(dllexport) void TITCALL DebugLoop()
             //general unhandled exception callback
             if(DBGCode == DBG_EXCEPTION_NOT_HANDLED)
             {
-                engineStepActive = false;
+                engineStepTID = 0;
 
                 if(DBGCustomHandler->chUnhandledException != NULL)
                 {
